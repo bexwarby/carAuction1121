@@ -14,7 +14,7 @@ use PDO;
 /**
  * Car list / details model
  */
-class Car
+class CarList
 {
     /* Variables */
     protected $id;
@@ -154,9 +154,9 @@ class Car
     }
 
     /**
-     * Get the car data by id
+     * Get all car data
      */
-    public static function fetchById($id, $dbh)
+    public static function fetchAllCars($id, $dbh)
     {
         // Sanitise car ID
         $id = filter_var($id, FILTER_SANITIZE_STRING);
@@ -188,4 +188,38 @@ class Car
 
         return $cars;
     }
+
+     /**
+     * Get specific car data
+     */
+    public static function fetchById($id, $dbh)
+    {
+        // Sanitise car ID
+        $id = filter_var($id, FILTER_SANITIZE_STRING);
+        // Prepare the DB and execute the query
+        // QUERY NEEDS TO BE A JOINT - UPDATE!!
+        // INCLUDE CURRENT BID AS WELL AS ALL DETAILS
+        // NOT FETCHALL()!
+        $query = $dbh->prepare("SELECT * FROM car WHERE id = ?");
+        $results = $query->execute([$id])->fetchAll(PDO::FETCH_ASSOC);
+        // create instance - how to include currentPrice?!
+        $indiv_car = new Car(
+            $results["id"], 
+            $results["model"], 
+            $results["make"], 
+            $results["power"], 
+            $results["year"], 
+            $results["startDate"], 
+            $results["endDate"], 
+            $results["description"], 
+            $results["seller"], 
+            $results["startingPrice"], 
+            $results["winner"], 
+            $dbh
+        )
+
+        return $indiv_car;
+    }
+
+
 }

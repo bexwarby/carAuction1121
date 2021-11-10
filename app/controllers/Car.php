@@ -32,7 +32,9 @@ class Car
      */
 	public function renderList()
 	{
-        $list_view = new CarsView(); // Create new instance
+        $dbh = Database::createDBConnection(); // connect to DB
+        $posts = CarList::fetchAllCars($dbh); // fetch all car data
+        $list_view = new CarsView($posts); // Create new instance
         $list_view->render(); // Call render method from the Cars view
     }
 
@@ -41,7 +43,9 @@ class Car
      */
 	public function renderSingle()
 	{
-        $single_car_view = new SingleCarView(); // Create new instance
+        $dbh = Database::createDBConnection(); // connect to DB
+        $posts = CarList::fetchById($dbh); // fetch all car data
+        $single_car_view = new SingleCarView($posts); // Create new instance
         $single_car_view->render(); // Call render method from the Cars view
     }
 
@@ -50,6 +54,9 @@ class Car
      */
 	public function renderAuction()
 	{
+        $dbh = Database::createDBConnection(); // connect to DB
+        // DO WE NEED TO FETCH DATA HERE??
+        
         $auction_car_view = new AuctionView(); // Create new instance
         $auction_car_view->render(); // Call render method from the Cars view
     }
@@ -69,7 +76,8 @@ class Car
         /* Validate email address */
         if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL) === false) {
             $data_validated = false; // Insertion impossible as email is invalid
-			echo "Please sign in to continue";
+			// user must be signed in to post a car for auction
+            echo "Please sign in to continue";
         }
 
         if ($data_validated) {
@@ -91,13 +99,54 @@ class Car
 				$_POST["startingPrice"], 
 				$dbh
 			);
+            var_dump($new_car);
 
             /* Insert into DB */
             $result = $new_car->insert();
         }
 
+        /* Show the cars view */
+        $cars_view = new Cars($result); // Create new instance
+        $cars_view->render(); // Call render method from the Home view
+    }
+
+    /**
+     * New car bid form
+     */
+	public function add_bid()
+	{
+        /**
+         * Validate data
+         */
+
+        /* Check if data is valid */
+        $data_validated = true;
+
+        /* Validate email address */
+        if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL) === false) {
+            $data_validated = false; // Insertion impossible as email is invalid
+			// user must be signed in to bid
+            echo "Please sign in to continue";
+        }
+
+        if ($data_validated) {
+
+            /* Create DB connection */
+            $dbh = Database::createDBConnection();
+
+            /* Create new object from CarList model */
+            $new_bid = new Bid(
+				$_POST["currentPrice"], 
+				$dbh
+			);
+            var_dump($new_bid);
+
+            /* Insert into DB */
+            $result = $new_bid->insert();
+        }
+
         /* Show the home view */
-        $home_view = new HomeView($result); // Create new instance
-        $home_view->render(); // Call render method from the Home view
+        $single_car_view = new SingleCar($result); // Create new instance
+        $single_car_view->render(); // Call render method from the Home view
     }
 }

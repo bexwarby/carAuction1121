@@ -15,11 +15,11 @@ include_once __DIR__ . "/controllers/Menu.php"; // Menu controller
 
 /* Alias */
 use App\Router\Router;
-use App\Controllers\Menu;
 use App\Controllers\Home;
 use App\Controllers\Car;
 use App\Controllers\User;
 use App\Controllers\NotFound;
+use App\Controllers\Menu;
 
 
 /*********************/
@@ -45,24 +45,31 @@ $router = new Router($uri, $method);
 $homeController = new Home();
 
 $router->get("/",  [$homeController, 'render']); // GET /
+
 $router->post("/", [$homeController, 'process_contact_form']); // POST /
 /*********************/
 
 /*** Cars list page ***/
 $carsController = new Car();
 
-$router->get("cars", [$carsController, 'render']); // GET /
-$router->get("cars/:id", [$carsController, 'show_car']); // GET /
-$router->post("cars/add", [$carsController, 'new_car']); // POST /
+$router->get("cars", [$carsController, 'renderList']); // GET /
+$router->get("cars/:id", [$carsController, 'renderSingle']); // GET /
+$router->get("cars/:userId/add", [$carsController, 'renderAuction']); // GET /
+
+$router->post("cars/:userId/add", [$carsController, 'process_new_car']); // POST /
 /*********************/
 
 /*** Profile page ***/
 $userController = new User();
 
-$router->get("profile/:id", [$userController, 'render']); // GET /
+$router->get("profile/:userId", [$userController, 'renderProfile']); // GET /
+$router->get("profile/:userId/update", [$userController, 'renderUpdate']); // GET /
+$router->get("profile", [$userController, 'renderProfile']); // GET /
+$router->get("profil/new", [$userController, 'renderCreate']); // GET /
+
 $router->post("profile", [$userController, 'connect']); // POST /
 $router->post("profile/new", [$userController, 'create_user']); // POST /
-$router->post("profile/:id/update", [$userController, 'profile_update']); // POST /
+$router->post("profile/:userId/update", [$userController, 'profile_update']); // POST /
 /*********************/
 
 /*** Legal mentions ***/

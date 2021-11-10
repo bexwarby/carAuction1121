@@ -5,13 +5,14 @@
  * Displays by default if no other route found.
  */
 
+
 /* Namespace */
 namespace App\Views;
 
 /**
  * NotFound View
  */
-class NotFound
+class NotFound 
 {
 
     /**

@@ -100,5 +100,30 @@ class User
         ]);
     }
     
+    /**
+     * Get the user data by email
+     */
+    public static function fetchByEmail($dbh)
+    {
+        // NEEDS UPDATING TO BE FOR ONE SPECIFIC USER
+        // Sanitise car ID
+        $email = filter_var($email, FILTER_SANITIZE_STRING);
+        // Prepare the DB and execute the query
+        $query = $dbh->prepare("SELECT * FROM user WHERE email = ?");
+        $results = $query->execute([$email])->fetchAll(PDO::FETCH_ASSOC);
+        // create the instance
+        $user = new Car(
+            $result["id"], 
+            $result["firstname"], 
+            $result["lastname"], 
+            $result["email"], 
+            $result["password"], 
+            $dbh
+        )
+            );
+        }
+
+        return $user;
+    }
 
 }

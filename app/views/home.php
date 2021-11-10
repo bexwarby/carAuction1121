@@ -36,7 +36,7 @@ class Home
     public function render()
     { include __DIR__."/menu.php";
         // call menu function
-        Menu::show_menu();?>
+        (new Menu)->show_menu();?>
 
         <!DOCTYPE html>
         <html>
@@ -73,24 +73,23 @@ class Home
 
                     <!-- CONTACT FORM -->
                     <form action="/" method="POST">
-
+                        <!-- First name -->
                         <label for="firstname">First name:</label>
                         <input type="text" id="firstname" name="firstname" required />
-
+                        <!-- Last name -->
                         <label for="lastname">Surname:</label>
                         <input type="text" id="lastname" name="lastname" required />
-
+                        <!-- Email -->
                         <label for="email">Email:</label>
                         <input type="email" id="email" name="email" required />
-
+                        <!-- Phone number -->
                         <label for="phone">Phone number:</label>
                         <input type="text" id="phone" name="phone" required />
-
+                        <!-- Message -->
                         <label id="message">Message</label>
                         <textarea name="message" id="message" required></textarea>
-
-                        <button>Valider</button>
-                        
+                        <!-- Send button -->
+                        <button>Send</button>
                     </form>
                 </div>
             </body>

@@ -18,7 +18,7 @@ class Auction
      * Display the page
      */
     // NEED TO CONVERT/CLEAN CODE FOR CONDITIONAL RENDERING
-    public function renderAuction()
+    public function render()
     
     { ?>
 

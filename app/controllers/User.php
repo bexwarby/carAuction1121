@@ -13,12 +13,14 @@ include_once __DIR__ . "/../core/Database.class.php"; // Connection to the datab
 include_once __DIR__ . "/../models/Users.php"; // User model
 include __DIR__ . "/../views/users/user.php"; // User view - general profile page
 include __DIR__ . "/../views/users/createUser.php"; // Create user view
+include __DIR__ . "/../views/users/modifyProfile.php"; // Create user view
 
 /* Alias */
-use App\Views\Users\Create as CreateUserView;
-use App\Views\Users\User as ProfileView;
-use App\Models\Users as UsersModel;
 use App\Database\Database;
+use App\Models\User as UsersModel;
+use App\Views\Users\User as ProfileView;
+use App\Views\Users\CreateUser as CreateUserView;
+use App\Views\Users\ModifyUser as UpdateView;
 
 /**
  * User Controller
@@ -30,7 +32,9 @@ class User
      */
 	public function renderProfile()
 	{
-        $profile_view = new ProfileView(); // Create new instance
+        $dbh = Database::createDBConnection(); // connect to DB
+        $user = User::fetchByEmail($dbh); // fetch all car data
+        $profile_view = new ProfileView($user); // Create new instance
         $profile_view->render(); // Call render method from the Home view
     }
 
@@ -44,16 +48,26 @@ class User
     }
 
     /**
-     * Connect to account
+     * Display update user page
      */
-	public function connect()
+	public function renderUpdate()
 	{
-        // NEED TO WRITE THE FUNCTION
+        $dbh = Database::createDBConnection(); // connect to DB
+        $user = User::fetchByEmail($dbh); // fetch all car data
+        $update_view = new UpdateView($user); // Create new instance
+        $update_view->render(); // Call render method from the Home view
+    }
+
+    /**
+     * Connect to account - Form
+     */
+	public function connect() // NEED TO WRITE THE FUNCTION TO LOG IN
+	{
 
 	}
 	
 	/**
-     * Sign up as a new user
+     * Sign up as a new user - Form
      */
 	public function create_user()
 	{
@@ -87,10 +101,37 @@ class User
     }
 	
 	/**
-     * Update user data
+     * Update user data - Form
      */
-	public function profile_update()
+	public function profile_update() // NEED TO CHECK THIS WORKS
 	{
-        // NEED TO WRITE THE FUNCTION
-	}
+        
+        /**
+         * Validate data
+         */
+
+        /* Check if data is valid */
+        $data_validated = true;
+
+        /* Validate email address */
+        if (!$id) {
+            $data_validated = false; // Insertion impossible as user Id is invalid
+        }
+
+        if ($id) {
+
+            /* Create DB connection */
+            $dbh = Database::createDBConnection();
+
+            /* Create new object from ContactModel */
+            $update_user = new UsersModel($id, $_POST["firstname"], $_POST["lastname"], $_POST["email"], $_POST["password"], $dbh);
+
+            /* Insert into DB */
+            $result = $update_user->insert();
+        }
+
+        /* Show the home view */
+        $profile_view = new ProfileView($result); // Create new instance
+        $profile_view->render(); // Call render method from the Home view
+    }
 }

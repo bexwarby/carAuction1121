@@ -8,9 +8,6 @@
 /* Namespace */
 namespace App\Models;
 
-/* Alias */
-use PDO;
-
 /**
  * Contact Model
  */

@@ -35,7 +35,7 @@ class User
      * Display the page
      */
     // NEED TO CONVERT/CLEAN CODE FOR CONDITIONAL RENDERING
-    public function render()
+    public function renderProfile()
     
     { ?>
 

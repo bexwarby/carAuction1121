@@ -16,7 +16,7 @@ include __DIR__ . "/../views/legal.php"; // Legal view
 
 /* Alias */
 use App\Views\Home as HomeView;
-use App\Views\Legal as Legal;
+use App\Views\Legal as LegalView;
 use App\Models\Contact as ContactModel;
 use App\Database\Database;
 
@@ -40,7 +40,7 @@ class Home
      */
     public function legal()
     {
-        $legal_view = new Legal(); // Create new instance
+        $legal_view = new LegalView(); // Create new instance
         $legal_view->render(); // Call render method from the Legal view
     }
 
