@@ -203,7 +203,7 @@ class CarList
         $query = $dbh->prepare("SELECT * FROM car WHERE id = ?");
         $results = $query->execute([$id])->fetchAll(PDO::FETCH_ASSOC);
         // create instance - how to include currentPrice?!
-        $indiv_car = new Car(
+       /*  $indiv_car = new Car(
             $results["id"], 
             $results["model"], 
             $results["make"], 
@@ -216,9 +216,7 @@ class CarList
             $results["startingPrice"], 
             $results["winner"], 
             $dbh
-        )
-
-        return $indiv_car;
+        ) */
     }
 
 

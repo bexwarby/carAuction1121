@@ -112,18 +112,17 @@ class User
         $query = $dbh->prepare("SELECT * FROM user WHERE email = ?");
         $results = $query->execute([$email])->fetchAll(PDO::FETCH_ASSOC);
         // create the instance
-        $user = new Car(
+        /* $user = new Car(
             $result["id"], 
             $result["firstname"], 
             $result["lastname"], 
             $result["email"], 
             $result["password"], 
             $dbh
-        )
-            );
-        }
+        ) */
+        /* }
 
-        return $user;
+        return $user; */
     }
 
 }
