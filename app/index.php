@@ -43,37 +43,38 @@ $router = new Router($uri, $method);
 
 /*** Home page ***/
 $homeController = new Home();
-
-$router->get("/",  [$homeController, 'render']); // GET /
-
-$router->post("/", [$homeController, 'process_contact_form']); // POST /
+// GET /
+$router->get("/",  [$homeController, 'render']); 
+// POST /
+$router->post("/", [$homeController, 'process_contact_form']); 
 /*********************/
 
 /*** Cars list page ***/
 $carsController = new Car();
-
-$router->get("cars", [$carsController, 'renderList']); // GET /
-$router->get("cars/:id", [$carsController, 'renderSingle']); // GET /
-$router->get("cars/:userId/add", [$carsController, 'renderAuction']); // GET /
-
-$router->post("cars/:userId/add", [$carsController, 'process_new_car']); // POST /
+// GET /
+$router->get("/cars", [$carsController, 'renderList']); 
+$router->get("/cars/:id", [$carsController, 'renderSingle']);
+$router->get("/cars/:userId/add", [$carsController, 'renderAuction']); 
+// POST /
+$router->post("/cars/:userId/add", [$carsController, 'process_new_car']); 
 /*********************/
 
 /*** Profile page ***/
 $userController = new User();
-
-$router->get("profile/:userId", [$userController, 'renderProfile']); // GET /
-$router->get("profile/:userId/update", [$userController, 'renderUpdate']); // GET /
-$router->get("profile", [$userController, 'renderProfile']); // GET /
-$router->get("profil/new", [$userController, 'renderCreate']); // GET /
-
-$router->post("profile", [$userController, 'connect']); // POST /
-$router->post("profile/new", [$userController, 'create_user']); // POST /
-$router->post("profile/:userId/update", [$userController, 'profile_update']); // POST /
+// GET /
+$router->get("/login", [$userController, 'renderLogin']); 
+$router->get("/profile/:userId", [$userController, 'renderProfile']); 
+$router->get("/profile/:userId/update", [$userController, 'renderUpdate']); 
+$router->get("/profile", [$userController, 'renderProfile']); 
+$router->get("/profil/new", [$userController, 'renderCreate']); 
+// POST /
+$router->post("/login", [$userController, 'connect']); 
+$router->post("/profile/new", [$userController, 'create_user']); 
+$router->post("/profile/:userId/update", [$userController, 'profile_update']); 
 /*********************/
 
 /*** Legal mentions ***/
-$router->get ("legal", [$homeController, 'legal']);
+$router->get ("/legal", [$homeController, 'legal']);
 /*********************/
 
 /*** Default Route ***/

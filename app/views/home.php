@@ -30,13 +30,18 @@ class Home
         }
     }
 
+    
     /**
      * Display the home page
      */
     public function render()
-    { include __DIR__."/menu.php";
-        // call menu function
-        (new Menu)->show_menu();?>
+    { /**
+     * Display the menu page
+    */
+    include __DIR__."/menu.php";
+    // call menu function
+    (new Menu)->show_menu();
+    ?>
 
         <!DOCTYPE html>
         <html>

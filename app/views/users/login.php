@@ -8,19 +8,27 @@
 /* Namespace */
 namespace App\Views\Users;
 
+
 /**
  * Create User View
  */
-class CreateUser
+class Login
 {
+    /* Variables */
+    protected $message;
+
+    public function __construct($message)
+    {
+        if(isset($message)){
+            $this->message = $message
+        }
+    }
 
     /**
      * Display the sign up form
      */
     // NEED TO CONVERT/CLEAN CODE FOR CONDITIONAL RENDERING
-    public function render()
-    
-    { ?>
+    public function renderLogin() { ?>
 
         <!DOCTYPE html>
         <html>
@@ -35,17 +43,13 @@ class CreateUser
             <body>
                 <div id="mainContainer">
 
-                    <h2>Welcome to Car Auction LTD</h2>
-                    <h3>Sign up here in just 1 minute</h3>
+                    <h3>Sign In Now</h3>
 
+                    <?php if(isset($this->message)) { ?>
+                        <p><?= $this->message; ?></p>
+                    <?php } ?>
                     <!-- CREATE USER FORM -->
-                    <form action="/profile/:id" method="POST">
-
-                        <label for="firstname">First name:</label>
-                        <input type="text" id="firstname" name="firstname" required />
-
-                        <label for="lastname">Last name:</label>
-                        <input type="text" id="lastname" name="lastname" required />
+                    <form action="/login" method="POST">
 
                         <label for="email">Email:</label>
                         <input type="email" id="email" name="email" required />
@@ -56,9 +60,9 @@ class CreateUser
                         <input type="submit" value="Sign up">
                     </form>
 
-                    <!-- LINK TO LOGIN FORM ON PROFILE PAGE -->
-                    <p><i>Already have an account?</i></p>
-                    <a href="http://">Sign in here!</a>
+                    <!-- LINK TO CREATE FORM ON PROFILE PAGE -->
+                    <p><i>Need to create an account?</i></p>
+                    <a href="http://">Sign up here!</a>
 
                 </div>
             </body>

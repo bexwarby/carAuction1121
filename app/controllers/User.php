@@ -11,14 +11,15 @@ namespace App\Controllers;
 /* Imports */
 include_once __DIR__ . "/../core/Database.class.php"; // Connection to the database
 include_once __DIR__ . "/../models/Users.php"; // User model
-include __DIR__ . "/../views/users/user.php"; // User view - general profile page
-include __DIR__ . "/../views/users/createUser.php"; // Create user view
-include __DIR__ . "/../views/users/modifyProfile.php"; // Create user view
+include_once __DIR__ . "/../views/users/user.php"; // User view - general profile page
+include_once __DIR__ . "/../views/users/createUser.php"; // Create user view
+include_once __DIR__ . "/../views/users/modifyProfile.php"; // Create user view
 
 /* Alias */
-use App\Database\Database;
+use App\Database\Database as DB;
 use App\Models\User as UsersModel;
 use App\Views\Users\User as ProfileView;
+use App\Views\Users\Login as LoginView;
 use App\Views\Users\CreateUser as CreateUserView;
 use App\Views\Users\ModifyUser as UpdateView;
 
@@ -32,10 +33,19 @@ class User
      */
 	public function renderProfile()
 	{
-        $dbh = Database::createDBConnection(); // connect to DB
+        $dbh = DB::createDBConnection(); // connect to DB
         $user = User::fetchByEmail($dbh); // fetch all car data
         $profile_view = new ProfileView($user); // Create new instance
         $profile_view->render(); // Call render method from the Home view
+    }
+
+    /**
+     * Display login page
+     */
+	public function renderLogin()
+	{
+        $login_view = new LoginView(); // Create new instance
+        $login_view->render(); // Call render method from the Home view
     }
 
 	/**
@@ -52,7 +62,7 @@ class User
      */
 	public function renderUpdate()
 	{
-        $dbh = Database::createDBConnection(); // connect to DB
+        $dbh = DB::createDBConnection(); // connect to DB
         $user = User::fetchByEmail($dbh); // fetch all car data
         $update_view = new UpdateView($user); // Create new instance
         $update_view->render(); // Call render method from the Home view
@@ -63,7 +73,18 @@ class User
      */
 	public function connect() // NEED TO WRITE THE FUNCTION TO LOG IN
 	{
+        $email = $_POST["email"];
+        $password = $_POST["password"];
 
+        $dbh = DB::createDBConnection($dbh, $email); // connect to DB
+        $user = User::fetchByEmail($dbh, $email);
+
+        if($user && password_verify($password, $user["password"])) {
+            $login_view = new LoginView("Your are connected"); // Create new instance
+            $update_view->render();
+        } else {
+            echo "Your email or password is incorrect";
+        }
 	}
 	
 	/**
@@ -86,7 +107,7 @@ class User
         if ($data_validated) {
 
             /* Create DB connection */
-            $dbh = Database::createDBConnection();
+            $dbh = DB::createDBConnection();
 
             /* Create new object from ContactModel */
             $new_user = new UsersModel(null, $_POST["firstname"], $_POST["lastname"], $_POST["email"], $_POST["password"], $dbh);
@@ -121,7 +142,7 @@ class User
         if ($id) {
 
             /* Create DB connection */
-            $dbh = Database::createDBConnection();
+            $dbh = DB::createDBConnection();
 
             /* Create new object from ContactModel */
             $update_user = new UsersModel($id, $_POST["firstname"], $_POST["lastname"], $_POST["email"], $_POST["password"], $dbh);

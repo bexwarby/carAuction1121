@@ -1,0 +1,20 @@
+INSERT INTO `users` (`firstname`, `lastname`, `email`, `password`) VALUES
+('Bex', 'Wabs', 'bex@lebocal', MD5('6caf8980edf3cb5e4ac0c9e8835186e3')),
+('Ben', 'Flowerpot', 'ben@lebocal', MD5('0e88640850a13a1ed983d8c0f3dbb0fe')),
+('Jeff', 'Waters', 'jeff@lebest.com', MD5('d6e25863ed50e14d9967e36fce36dc74')),
+('Janet', 'Jackson', 'jan@jackson.com', MD5('d6e25863e967e36fce36dc74')),
+('Mick', 'Jackson', 'm@jackson.com', MD5('d6e25863ed50e14d996fce36dc74'));
+COMMIT;
+  
+INSERT INTO `car` (`model`, `make`, `power`, `year`, `startDate`, `endDate`, `description`, `seller`, `startingPrice`, `winner`) VALUES
+('A‑Class', 'Mercedes‑Benz', 'bex@lebocal', MD5('6caf8980edf3cb5e4ac0c9e8835186e3')),
+('A3', 'Audi', 'ben@lebocal', MD5('0e88640850a13a1ed983d8c0f3dbb0fe')),
+('A4', 'Audi', 'jeff@lebest.com', MD5('d6e25863ed50e14d9967e36fce36dc74')),
+('Janet', 'Jackson', 'jan@jackson.com', MD5('d6e25863e967e36fce36dc74')),
+('Mick', 'Jackson', 'm@jackson.com', MD5('d6e25863ed50e14d996fce36dc74'));
+COMMIT;
+
+
+
+
+carAuction1121.test

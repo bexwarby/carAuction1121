@@ -38,16 +38,16 @@ class Menu
                                 <a class="navbar-brand" href="/">Home<span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="cars">Car List</a>
+                                <a class="nav-link" href="/cars">Car List</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="cars/details">More details</a>
+                                <a class="nav-link" href="/cars/:id">More details</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="profile">Profile</a>
+                                <a class="nav-link" href="/profile">Profile</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="legal">Legal</a>
+                                <a class="nav-link" href="/legal">Legal</a>
                             </li>
                         </ul>
                     </div>

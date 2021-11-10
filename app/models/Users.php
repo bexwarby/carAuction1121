@@ -8,6 +8,9 @@
 /* Namespace */
 namespace App\Models;
 
+/* Alias */
+use PDO;
+
 /**
  * User Model
  */
@@ -23,37 +26,6 @@ class User
     protected $dbh;
 
     /**
-     * Get methods
-     */
-    public function getFirstname() { return $this->firstname; }
-    public function getLastname() { return $this->lastname; }
-    public function getEmail() { return $this->email; }
-    public function getPassword() { return $this->password; }
-
-    /**
-     * Set methods
-     */
-    public function setFirstname(string $firstname)
-    {
-        $this->firstname = $firstname;
-    }
-
-    public function setLastname(string $lastname)
-    {
-        $this->lastname = $lastname;
-    }
-
-    public function setEmail(string $email)
-    {
-        $this->email = $email;
-    }
-
-    public function setPassword(string $password)
-    {
-        $this->password = $password;
-    }
-
-    /**
      * Constructor
      */
     public function __construct($id, $firstname, $lastname, $email, $password, $dbh) {
@@ -61,7 +33,7 @@ class User
         $this->id = $id;
         $this->firstname = filter_var($firstname, FILTER_SANITIZE_STRING);
         $this->lastname = filter_var($lastname, FILTER_SANITIZE_STRING);
-        $this->email = filter_var($email, FILTER_SANITIZE_STRING);
+        $this->email = filter_var($email, FILTER_SANITIZE_EMAIL);
         $this->password = filter_var($password, FILTER_SANITIZE_STRING);
         $this->dbh = $dbh;
     }  
@@ -103,26 +75,22 @@ class User
     /**
      * Get the user data by email
      */
-    public static function fetchByEmail($dbh)
+    public static function fetchByEmail($dbh, $email)
     {
-        // NEEDS UPDATING TO BE FOR ONE SPECIFIC USER
-        // Sanitise car ID
-        $email = filter_var($email, FILTER_SANITIZE_STRING);
-        // Prepare the DB and execute the query
-        $query = $dbh->prepare("SELECT * FROM user WHERE email = ?");
-        $results = $query->execute([$email])->fetchAll(PDO::FETCH_ASSOC);
-        // create the instance
-        /* $user = new Car(
-            $result["id"], 
-            $result["firstname"], 
-            $result["lastname"], 
-            $result["email"], 
-            $result["password"], 
-            $dbh
-        ) */
-        /* }
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-        return $user; */
+        $query = $dbh->prepare("SELECT * FROM user WHERE email=?");
+        $query->execute([$email]);
+
+        $user = $query->fetch();
+        var_dump($user);
+
+        // return false if no user
+        if (!$user) { 
+            return false; 
+        }
+        
+        return new User($user["id"], $user["firstname"], $user["lastname"], $user["email"], $user["password"]);
     }
 
 }

@@ -68,13 +68,13 @@ class Home
 
             /* Create new object from ContactModel */
             $contact = new ContactModel(null, $_POST["firstname"], $_POST["lastname"], $_POST["email"], $_POST["phone"], $_POST["message"], $dbh);
-
+            var_dump($contact);
             /* Insert into DB */
             $result = $contact->insert();
         }
 
         /* Show the home view */
-        $home_view = new HomeView($result); // Create new instance
+        $home_view = new HomeView(); // Create new instance
         $home_view->render(); // Call render method from the Home view
     }
 }

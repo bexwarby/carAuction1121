@@ -14,22 +14,6 @@ namespace App\Views\Users;
  */
 class User
 {
-    /* Variables */
-    protected $result;
-
-    /**
-     * Constructor
-     * Takes on parameter a boolean containing the result 
-     * from the sign in form
-     * If null, then the request was not from the form.
-     */
-    public function __construct($result)
-    {
-        // if $result is not null
-        if (isset($result)) {
-            $this->result = $result; // Assign value from the parameter $result
-        }
-    }
 
     /**
      * Display the page
@@ -54,8 +38,7 @@ class User
 
                     <h1>Your Profile</h1>
 
-                    <?php if (/**Condition for connected */$this->result === true) { ?>
-                        <!-- DISPLAY PROFILE DATA FROM DB -->
+                        <!-- DISPLAY PROFILE DATA FROM DB IF CONNECTED -->
                         <p>
                             First Name: 
                         </p>
@@ -71,29 +54,13 @@ class User
 
                         <h4>Your ongoing auctions:</h4>
 
-                         <!-- LINK TO CREATE USER FORM -->
+                         <!-- LINK TO CREATE CAR FORM -->
                          <p><i>Want to add your own car for auction?</i></p>
                         <button href="">Get it online here!</button>
 
-                    <?php } else { ?>
-
-                        <!-- SIGN IN FORM -->
-                        <form action="/profile/:id" method="POST">
-
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" required />
-
-                            <label id="password">Password:</label>
-                            <textarea type="password" name="password" id="password" required></textarea>
-
-                            <button>Sign me in!</button>
-                        </form>
-
                         <!-- LINK TO CREATE USER FORM -->
-                        <p><i>Don't have an account?</i></p>
-                        <button href="">Sign up here!</button>
-
-                    <?php } ?>
+                        <p><i>Log in now</i></p>
+                        <button href="">Connect</button>
 
                 </div>
             </body>
